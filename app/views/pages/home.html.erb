@@ -1,0 +1,7 @@
+<%= javascript_pack_tag 'react_app' %>
+
+<%= javascript_tag do %>
+  window.application = { user: <%== @user.to_json %> }
+<% end %>
+
+<div id="react_app"></div>
