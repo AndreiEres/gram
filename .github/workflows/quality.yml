@@ -14,19 +14,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up
+      - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
 
-      - name: Install dependencies
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Install ruby dependencies
         run: bundle install
 
-      - name: Check quality
-        run: script/quality
+      - name: Install node dependencies
+        run: yarn
 
       - name: Set up db
         run: bin/rails db:setup
+
+      - name: Check quality
+        run: script/quality
 
       - name: Run tests
         env:
