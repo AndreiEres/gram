@@ -3,6 +3,10 @@
 require "rails_helper"
 
 describe User do
+  describe "associations" do
+    it { is_expected.to have_many(:posts) }
+  end
+
   describe ".find_or_create_from_auth" do
     context "when user exist" do
       let(:user) { create(:user) }

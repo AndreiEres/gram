@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  has_many :posts, dependent: :destroy
+
   def self.find_or_create_from_auth(auth)
     auth_info = auth["info"]
     create_with(email: auth_info["email"], name: auth_info["name"], image: auth_info["image"])
