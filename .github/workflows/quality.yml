@@ -14,8 +14,6 @@ jobs:
     services:
       postgres:
         image: postgres
-        env:
-          POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -37,6 +35,9 @@ jobs:
         with:
           node-version: 12.x
 
+      - name: Install postgres client
+        run: sudo apt-get install libpq-dev
+
       - name: Install ruby dependencies
         run: bundle install
 
@@ -47,9 +48,6 @@ jobs:
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY}}
           RAILS_ENV: 'test'
-          DATABASE_URL: 'postgresql://postgres:@0.0.0.0:5432/gram_test'
-          DATABASE_CLEANER_ALLOW_PRODUCTION: 'true'
-          DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
         run: bin/rails db:setup
 
       - name: Check quality
@@ -59,7 +57,4 @@ jobs:
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY}}
           RAILS_ENV: 'test'
-          DATABASE_URL: 'postgresql://postgres:@0.0.0.0:5432/gram_test'
-          DATABASE_CLEANER_ALLOW_PRODUCTION: 'true'
-          DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
         run: script/tests
