@@ -31,6 +31,8 @@ jobs:
         run: yarn
 
       - name: Set up db
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY}}
         run: bin/rails db:setup
 
       - name: Check quality
