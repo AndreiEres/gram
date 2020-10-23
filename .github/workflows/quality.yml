@@ -22,4 +22,6 @@ jobs:
     - name: Check quality
       run: script/quality
     - name: Run tests
+      env:
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY}}
       run: script/tests
